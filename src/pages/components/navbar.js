@@ -100,24 +100,6 @@ function AdainNavBar() {
 
                   
 
-          
-                  
-               {/* I created a sign in button here to have an event listener of onclick 
-               that it should listen to handle click function above 
-              the parent codeblock... */}
-
-              
-<button className="md:text-base text-sm hover:border-2 border-2 border-transparent font-semibold py-3 px-8 md:px-10 text-white bg-blue  rounded-full">
-          <Link href="/login">
-            Login
-          </Link>
-        </button>
-
-        <button className="md:text-base text-sm hover:border-2 border-2 border-transparent font-semibold py-3 px-8 md:px-10 text-white bg-blue rounded-full">
-          <Link href="/" >
-            Book Now
-          </Link>
-        </button>
             
                 
                 
