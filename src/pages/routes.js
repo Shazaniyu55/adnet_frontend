@@ -1,7 +1,7 @@
 import React from "react";
 
 // Admin Imports
-import MainDashboard from "../pages/views/admin/default";
+import MainDashboard from "../pages/views/admin/default/index";
 // import NFTMarketplace from "../pages/views/admin/marketplace";
 // import Profile from "../pages/views/admin/profile";
 // import DataTables from "../pages/views/admin/tables";
@@ -22,8 +22,8 @@ import {
 const routes = [
   {
     name: "Main Dashboard",
-    layout: "/john",
-    path: "niyu",
+    layout: "/admin",
+    path: "default",
     icon: <MdHome className="h-6 w-6" />,
     component: <MainDashboard />,
   },
