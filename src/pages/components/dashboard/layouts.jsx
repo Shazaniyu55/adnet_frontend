@@ -49,6 +49,7 @@ export default function Layout(props) {
                   justifyContent={"center"}
                   flexDirection={"column"}
                 >
+                  {props.children }
                 </Box>
               </Grid>
             </Grid>
