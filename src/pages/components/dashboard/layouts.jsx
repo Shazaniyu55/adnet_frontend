@@ -5,6 +5,9 @@ import Head from "next/head";
 import { useSelector } from "react-redux";
 import { useTheme, useMediaQuery } from "@mui/material";
 import CDashboardMenu from "./c-dashboardmenu";
+import DesktopHomeAppBar from "../appbar/desktophomeappbar";
+import DesktopDashboardAppBar from "../appbar/desktopappbar";
+import DashBoardAppBar from "../appbar/dashboardaoobar";
 
 
 export default function Layout(props) {
@@ -18,6 +21,7 @@ export default function Layout(props) {
         <link rel="preconnect" href="https://fonts.gstatic.com" />
       </Head>
       <Box>
+      {mediaQuery ? <DesktopDashboardAppBar /> : <DashBoardAppBar />}
         <Grid container>
         {mediaQuery && (
             <Grid item xs={12} md={3}>
