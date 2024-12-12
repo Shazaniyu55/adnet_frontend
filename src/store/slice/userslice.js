@@ -10,7 +10,27 @@ export const fetchUser = createAsyncThunk("users/getUser", async () => {
   return data;
 });
 
-export const signUp = createAsyncThunk("auth/register", async (values) => {
+// export const signUp = createAsyncThunk("auth/register", async (values) => {
+//   try {
+//     const res = await axios({
+//       method: "POST",
+//       url: `http://localhost:4200/api/auth/register`,
+//       data: values,
+//     });
+//     const data = await res.data;
+//     console.log(data)
+//     localStorage.removeItem("values");
+//     return data;
+//   } catch (err) {
+//     return {
+//       successful: false,
+//       message: err.response?.data?.message,
+//       user: {},
+//     };
+//   }
+// });
+
+export const signUp = createAsyncThunk("auth/register", async (values, { rejectWithValue }) => {
   try {
     const res = await axios({
       method: "POST",
@@ -18,34 +38,26 @@ export const signUp = createAsyncThunk("auth/register", async (values) => {
       data: values,
     });
     const data = await res.data;
-    console.log(data)
     localStorage.removeItem("values");
-    return data;
+    return data; // Will be passed to the fulfilled case
   } catch (err) {
-    return {
-      successful: false,
-      message: err.response?.data?.message,
-      user: {},
-    };
+    return rejectWithValue(err.response?.data?.message || "An error occurred during sign-up.");
   }
 });
 
-export const login = createAsyncThunk("users/login", async (values) => {
+export const login = createAsyncThunk("auth/login", async (values, {rejectWithValue}) => {
   try {
     const res = await axios({
       method: "POST",
-      url: `https://mail-crm.vercel.app/api/users/login`,
+      url: `http://localhost:4200/api/auth/login`,
       data: values,
     });
     const data = await res.data;
     return data;
   } catch (err) {
     console.log(err);
-    return {
-      successful: false,
-      message: err.response?.data?.message,
-      user: {},
-    };
+    return rejectWithValue(err.response?.data?.message || "An error occurred during sign-up.");
+
   }
 });
 
@@ -135,7 +147,7 @@ const userSlice = createSlice({
     builder.addCase(signUp.fulfilled, (state, action) => {
       state.loading = false;
       localStorage.setItem("user", JSON.stringify(action.payload.user));
-      state.successful = action.payload.successful;
+      state.successful = action.payload.message;
       state.user = action.payload.user;
       state.response = action.payload.message;
       state.error = null;
@@ -147,7 +159,7 @@ const userSlice = createSlice({
     builder.addCase(signUp.rejected, (state, action) => {
       state.loading = false;
       state.successful = false;
-      state.error = action.error.message || "An error occurred during sign-up.";
+      state.error = action.payload || action.error.message;
     });
 
     builder.addCase(changePassword.fulfilled, (state, action) => {

@@ -3,17 +3,20 @@ import React, { useEffect } from 'react'
 // import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from '@/store/slice/userslice';
+import SuccessAlert from '../../alerts/success';
+import ErrorAlert from '../../alerts/error';
+import { useRouter } from "next/router";
 
 export default function Final({values}) {
-
+  const router = useRouter();
   const dispatch = useDispatch();
-  const { loading, success, error } = useSelector((state) => state.users);
+  const { loading, successful, error, user } = useSelector((state) => state.users);
   const handleSubmit = () => {
     dispatch(signUp(values));
   };
 
   useEffect(() => {
-    if (success) {
+    if (successful) {
       console.log("Submission successful!");
       // Perform navigation or display success message
     }
@@ -21,16 +24,22 @@ export default function Final({values}) {
       console.error("Submission error:", error);
       // Handle the error (e.g., show an alert or toast)
     }
-  }, [success, error]);
+    if (user) {
+          router.push("/dashboard");
+    }  
+    
+
+  }, [successful, error, user, router]);
 
   const {fullname, email, phoneNumber, password, plan} = values
 
-    
 
-    useEffect(() => {}, [])
 
   return (
     <div className='flex flex-col items-center justify-center'>
+      {/* Conditionally render success or error alerts */}
+      {successful && <SuccessAlert message={successful} />}
+      {error && <ErrorAlert message={error} />}
       <ul className='text-gray-600 font-mono text-lg'>
         <li>FullName: {fullname}</li>
         <li>Email: {email}</li>
@@ -44,8 +53,8 @@ export default function Final({values}) {
         disabled={loading}>
            {loading ? "Submitting..." : "Completed"}
             </button>
-            {error && <p className="text-red-500 mt-2">{error}</p>}
-            {success && <p className="text-green-500 mt-2">Submission successful!</p>}
+            
+            
         </div>
   )
 }
