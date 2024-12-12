@@ -2,6 +2,7 @@ import { Grid, Box } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { AppBarLogo } from "./homelogoutappbar";
 
 
 export default function DesktopDashboardAppBar() {
@@ -24,7 +25,7 @@ export default function DesktopDashboardAppBar() {
             alignItems={"center"}
             justifyContent={"flex-start"}
           >
-            {/* <AppBarLogo /> */}
+           <AppBarLogo/>
           </Grid>
           <Grid
             item

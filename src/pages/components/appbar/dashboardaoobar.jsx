@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import CDashboardMenu from "../dashboard/c-dashboardmenu";
+import { AppBarLogo } from "./homelogoutappbar";
 
 export default function DashBoardAppBar() {
   //retrive user from redux state
@@ -29,7 +30,7 @@ export default function DashBoardAppBar() {
             alignItems={"center"}
             justifyContent={"center"}
           >
-              <Box color={theme.smnk[1000]} minHeight={"100vh"}>
+              <Box color="blue" minHeight={"100vh"}>
 
                 
                  <CDashboardMenu/>
@@ -44,7 +45,7 @@ export default function DashBoardAppBar() {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            {/* <AppBarLogo /> */}
+           <AppBarLogo/>
           </Grid>
           <Grid
             item

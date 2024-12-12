@@ -3,6 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
 import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
+import { AppBarLogo } from "./homelogoutappbar";
 
 
 export default function DesktopHomeAppBar() {
@@ -19,7 +20,7 @@ export default function DesktopHomeAppBar() {
           alignItems={"center"}
           justifyContent={"flex-start"}
         >
-          {/* <AppBarLogo /> */}
+         <AppBarLogo/>
         </Grid>
         <Grid
           item
