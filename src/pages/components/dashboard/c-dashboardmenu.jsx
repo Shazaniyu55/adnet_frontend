@@ -39,7 +39,7 @@ export default function CDashboardMenu() {
   return (
     <>
       <List
-        sx={{ width: "100%", maxWidth: 360, pl: 0, overflowY: "auto" }}
+        sx={{ width: "100%", height:"100vh", maxWidth: 360, pl: 0, overflowY: "auto", backgroundColor:"black", color:"white" }}
         component="nav"
         aria-labelledby="nested-list-subheader"
       >
