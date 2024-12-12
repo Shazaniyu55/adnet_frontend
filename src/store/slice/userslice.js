@@ -2,20 +2,23 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userJSON } from "@/lib/utils/user";
 
+
+
 export const fetchUser = createAsyncThunk("users/getUser", async () => {
   const res = await axios("");
   const data = await res.data;
   return data;
 });
 
-export const signUp = createAsyncThunk("users/signUp", async (values) => {
+export const signUp = createAsyncThunk("auth/register", async (values) => {
   try {
     const res = await axios({
       method: "POST",
-      url: `https://mail-crm.vercel.app/api/users/signup`,
+      url: `http://localhost:4200/api/auth/register`,
       data: values,
     });
     const data = await res.data;
+    console.log(data)
     localStorage.removeItem("values");
     return data;
   } catch (err) {
@@ -93,6 +96,7 @@ const initialState = {
   response: "",
   loading: false,
   successful: false,
+  error:null
 };
 
 const userSlice = createSlice({
@@ -134,9 +138,16 @@ const userSlice = createSlice({
       state.successful = action.payload.successful;
       state.user = action.payload.user;
       state.response = action.payload.message;
+      state.error = null;
     });
     builder.addCase(signUp.pending, (state) => {
       state.loading = true;
+      state.error = null; // Clear any previous error
+    });
+    builder.addCase(signUp.rejected, (state, action) => {
+      state.loading = false;
+      state.successful = false;
+      state.error = action.error.message || "An error occurred during sign-up.";
     });
 
     builder.addCase(changePassword.fulfilled, (state, action) => {

@@ -10,9 +10,9 @@ export default function HospitalDetails({values, handleChange}) {
             </div>
             <div className="bg-white my-2 p-1 flex border border-gray-200 rounded ">
             <input type="text"
-            onChange={handleChange('hospitalName')}
-            value={values.hospitalName}
-            name='hospitalName'
+            onChange={handleChange('fullname')}
+            value={values.fullname}
+            name='fullname'
             placeholder="FullName"
             className="p-1 px-2 appearance-none outline-none w-full text-gray-800 placeholder:text-sm placeholder:gray-500 placeholder:opacity-50 placeholder:font-mono"
             />
@@ -27,9 +27,9 @@ export default function HospitalDetails({values, handleChange}) {
             </div>
             <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
             <input type="email"
-            onChange={handleChange('hospitalEmail')}
-            value={values.hospitalEmail}
-            name='hospitalEmail'
+            onChange={handleChange('email')}
+            value={values.email}
+            name='email'
             placeholder=" Email"
             className="p-1 px-2 appearance-none outline-none w-full text-gray-800 placeholder:text-sm placeholder:gray-500 placeholder:opacity-50 placeholder:font-mono"
             />
@@ -39,14 +39,14 @@ export default function HospitalDetails({values, handleChange}) {
         <div className="w-full mx-2 flex-1">
             <div className="font-bold font-mono h-6 mt-3 text-gray-500 text-sm
             leading-8 uppercase">
-                    Business Registration Number
+                    phoneNumber
             </div>
             <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
             <input type="number"
-            onChange={handleChange('hospitalRegNumber')}
-            value={values.hospitalRegNumber}
-            name='hospitalRegNumber'
-            placeholder="Business Registration Number"
+            onChange={handleChange('phoneNumber')}
+            value={values.phoneNumber}
+            name='phoneNumber'
+            placeholder=" phoneNumber"
             className="p-1 px-2 appearance-none outline-none w-full text-gray-800 placeholder:text-sm placeholder:gray-500 placeholder:opacity-50 placeholder:font-mono"
             />
             </div>
@@ -55,14 +55,14 @@ export default function HospitalDetails({values, handleChange}) {
         <div className="w-full mx-2 flex-1">
             <div className="font-bold font-mono h-6 mt-3 text-gray-500 text-sm
             leading-8 uppercase">
-                    Address
+                    Plan
             </div>
             <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
             <input type="text"
-            onChange={handleChange('hospitalAddress')}
-            value={values.hospitalAddress}
-            name='hospitalAddress'
-            placeholder=" Address"
+            onChange={handleChange('plan')}
+            value={values.plan}
+            name='plan'
+            placeholder=" Plan"
             className="p-1 px-2 appearance-none outline-none w-full text-gray-800 placeholder:text-sm placeholder:gray-500 placeholder:opacity-50 placeholder:font-mono"
             />
             </div>

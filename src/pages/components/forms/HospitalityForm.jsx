@@ -13,22 +13,19 @@ const HospitalityForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [finalData, setFinalData] = useState([])
   const [userData, setUserData] = useState({
-    medicalLicense: '', 
-    proofOfAddress: '', 
-    frontViewOfHospital: '', 
-    emergencyNumber: '', 
-    onSitDoctor: '', 
-    hospitalName: '',
-    hospitalEmail: '',
-    hospitalRegNumber: '',
-    hospitalAddress: '',
+    fullname: '', 
+    email: '', 
+    country: '', 
+    plan: '', 
+    password: '', 
+    phoneNumber: '', 
+  
   })
 
 
   const steps = [
     "Basic Details",
     "Personal Details",
-    "Document",
     "complete"
   ]
   const displayStep = (step) => {
@@ -37,9 +34,9 @@ const HospitalityForm = () => {
         return <HospitalDetails values={userData} handleChange={handleChange}/>
         case 2:
         return <EmergencyDetails values={userData} handleChange={handleChange}/>
+        // case 3:
+        // return <Document values={userData} handleChange={handleChange}/>
         case 3:
-        return <Document values={userData} handleChange={handleChange}/>
-        case 4:
         return <Final values={userData} handleChange={handleChange}/>
         default:
     }
