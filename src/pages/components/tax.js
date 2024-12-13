@@ -70,23 +70,21 @@ export default function Page() {
                     errors={errors?.engagement_activity?.[index]?.event?.message}
                     name={`engagement_activity.${index}.event`}
                   /> */}
-                  {/* <InputField
+                  <InputField
                   noTitle
                   type='text'
-                  register={register}
                   errors={errors?.engagement_activity?.[index]?.event?.message}
                   name={`engagement_activity.${index}.event`}
-                  /> */}
+                  />
                 </div>
                 <div className="pr-4">
-                  {/* <InputField
+                  <InputField
                     noTitle
                     type='number'
                     endAdorn='Person'
-                    register={register}
                     errors={errors?.engagement_activity?.[index]?.audience?.message}
                     name={`engagement_activity.${index}.audience`}
-                  /> */}
+                  />
                 </div>
                 <div className='flex items-center justify-end'>
                   {
