@@ -41,7 +41,7 @@ const Services = () => {
   const router = useRouter();
 
 function navigate(){
-  router.push('/components/regdashboard/layouts/rtl');
+  router.push('/form');
 }
 
     return (

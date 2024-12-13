@@ -17,44 +17,32 @@ import {
   MdBarChart,
   MdPerson,
   MdLock,
+  
 } from "react-icons/md";
 
 const routes = [
   {
-    name: "Main Dashboard",
+    name: "Home",
     layout: "/admin",
     path: "default",
     icon: <MdHome className="h-6 w-6" />,
     component: <MainDashboard />,
   },
   {
-    name: "Main Dashboard",
-    layout: "/admin",
-    path: "default",
-    icon: <MdOutlineShoppingCart className="h-6 w-6" />,
-    component: <MainDashboard />,
-  },
-  {
-    name: "Main Dashboard",
-    layout: "/admin",
-    path: "default",
-    icon: <MdBarChart className="h-6 w-6" />,
-    component: <MainDashboard />,
-  },
-  {
-    name: "Main Dashboard",
+    name: "Profile Details",
     layout: "/admin",
     path: "default",
     icon: <MdPerson className="h-6 w-6" />,
     component: <MainDashboard />,
   },
   {
-    name: "Main Dashboard",
+    name: "Document Details",
     layout: "/admin",
     path: "default",
-    icon: <MdLock className="h-6 w-6" />,
+    icon: <MdBarChart className="h-6 w-6" />,
     component: <MainDashboard />,
   },
+  
   // {
   //   name: "NFT Marketplace",
   //   layout: "/admin",

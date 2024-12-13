@@ -14,7 +14,7 @@ export default function DesktopDashboardAppBar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          bgcolor:"blue"
+          bgcolor:"black"
         }}
       >
         <Grid container>

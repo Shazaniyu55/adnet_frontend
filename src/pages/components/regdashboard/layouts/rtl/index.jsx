@@ -18,27 +18,27 @@ export default function RTL(props) {
   }, []);
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full md:w-full">
       <Sidebar open={open} onClose={() => setOpen(false)} />
       {/* Navbar & Main Content */}
-      <div className="flex h-full w-full bg-lightPrimary dark:!bg-navy-900">
+      <div className="flex h-full md:w-full bg-lightPrimary dark:!bg-navy-900">
         {/* Main Content */}
         <main
-          className={`mx-[12px] h-full flex-none transition-all md:pe-2 xl:mr-[313px]`}
+          className={`mx-[12px] md:w-full h-full flex-none transition-all md:pe-2 xl:mr-[313px]`}
         >
           {/* Routes */}
-          <div className="h-full">
+          <div className="h-full md:w-full">
           
             <Navbar
               onOpenSidenav={() => setOpen(true)}
-              logoText={"Horizon UI Tailwind React"}
+              logoText={"Adnet"}
               brandText={currentRoute}
               
               {...rest}
             />
-            <div className=" pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
+            <div className=" pt-5s md:w-full mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
 
-              <div className="flex justify-center items-center mt-10 p-4">
+              <div className="flex md:w-full justify-center items-center mt-10 p-4">
               {/* <MainDashboard/> */}
               <HospitalityForm/>
               </div>

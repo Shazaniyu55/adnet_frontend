@@ -3,7 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { Grid, Box, Skeleton } from "@mui/material";
+import { Grid, Box, Skeleton, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
@@ -22,6 +22,7 @@ export default function HomeLogoutAppBar() {
         >
           <AppBarLogo />
         </Grid>
+
         {/* <Grid
           item
           xs={1}
@@ -50,6 +51,8 @@ export function AppBarLogo() {
   const dispatch = useDispatch();
   return (
     <Box pt={2}>
+             
+
       <Image
         alt="adnet"
         src="/assets/logo.png"
@@ -61,6 +64,7 @@ export function AppBarLogo() {
           router.push("/");
         }}
       />
+      <h1 className="text-white font-bold">ADNET</h1>
     </Box>
   );
 }

@@ -11,11 +11,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/store/slice/userslice";
 import { ListItemIcon, Typography, Box, Card, CardContent, Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PersonCircleIcon from "@mui/icons-material/Person2";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import PendingIcon from "@mui/icons-material/Pending";
 import CreateIcon from "@mui/icons-material/Create";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import HomeIcon from "@mui/icons-material/Home";
+import ChatIcon from "@mui/icons-material/Chat";
 import Divider from "@mui/material/Divider";
 import WalletIcon from "@mui/icons-material/Wallet";
 import AddCardIcon from "@mui/icons-material/AddCard";
@@ -77,12 +79,12 @@ export default function CDashboardMenu() {
         <Divider />
         <ListItemButton sx={{ ml: 0 }} onClick={accountHandleClick}>
           <ListItemIcon>
-            <AccountCircleIcon color="primary" />
+            <PersonCircleIcon color="primary" />
           </ListItemIcon>
           <ListItemText
-            primary={<Typography variant="body1">Account</Typography>}
+            primary={<Typography variant="body1">Profile</Typography>}
           />
-          {openAccount ? <ExpandLess /> : <ExpandMore />}
+          {/* {openAccount ? <ExpandLess /> : <ExpandMore />} */}
         </ListItemButton>
         <Collapse in={openAccount} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -98,7 +100,7 @@ export default function CDashboardMenu() {
             <WorkHistoryIcon color="primary" />
           </ListItemIcon>
           <ListItemText
-            primary={<Typography variant="body1">Job</Typography>}
+            primary={<Typography variant="body1">Calculate</Typography>}
           />
           {openJob ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
@@ -115,7 +117,7 @@ export default function CDashboardMenu() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="caption">Pending Jobs</Typography>
+                  <Typography variant="caption">Expenditure </Typography>
                 }
               />
             </ListItemButton>
@@ -131,12 +133,12 @@ export default function CDashboardMenu() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="caption">Jobs In Progress</Typography>
+                  <Typography variant="caption">Analytics</Typography>
                 }
               />
             </ListItemButton>
             <Divider />
-            <CreateJobLink />
+            {/* <CreateJobLink /> */}
             <Divider />
             <ListItemButton
               sx={{ ml: 0 }}
@@ -149,12 +151,27 @@ export default function CDashboardMenu() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="caption">Completed Jobs</Typography>
+                  <Typography variant="caption">Reviews</Typography>
                 }
               />
             </ListItemButton>
           </List>
         </Collapse>
+
+        <ListItemButton
+          sx={{ ml: 0 }}
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          <ListItemIcon>
+            <ChatIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText
+            primary={<Typography variant="body1">Chat</Typography>}
+          />
+        </ListItemButton>
+
         <Divider />
         <WalletLink />
         <Divider />
