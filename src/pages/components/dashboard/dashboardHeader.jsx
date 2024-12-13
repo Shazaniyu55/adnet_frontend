@@ -10,6 +10,7 @@ function DashboardHeader() {
         justifyContent: "flex-end",
       }}
     >
+      <h1>Hello</h1>
     </Box>
   );
 }

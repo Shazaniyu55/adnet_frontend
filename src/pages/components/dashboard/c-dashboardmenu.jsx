@@ -5,11 +5,11 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useRouter } from "next/router";
-
-import { ListItemIcon, Typography, Box } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "@/store/slice/userslice";
+import { ListItemIcon, Typography, Box, Card, CardContent, Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import PendingIcon from "@mui/icons-material/Pending";
@@ -22,8 +22,11 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import UnsubscribeIcon from "@mui/icons-material/Unsubscribe";
 
 export default function CDashboardMenu() {
-  const { user } = useSelector((state) => state.users);
+  const { _id, fullname, phoneNumber, email, plan, country } = useSelector((state) => state.users.user);
+
+  const dispatch = useDispatch();
   const router = useRouter();
+  const [mounted, setMounted] = React.useState(false);
 
   const [openAccount, setOpenAccount] = React.useState(true);
   const [openJob, setOpenJob] = React.useState(true);
@@ -35,6 +38,20 @@ export default function CDashboardMenu() {
   const jobHandleClick = () => {
     setOpenJob(!openJob);
   };
+
+  React.useEffect(() => {
+    setMounted(true); // Set mounted to true after component mounts
+  }, []);
+
+  const handleLogout = () => {
+    router.push('/login')
+    dispatch(logout()); // Dispatch the logout action
+  };
+
+  if (!mounted) {
+    // Return null or a loading state during SSR phase
+    return null;
+  }
 
   return (
     <>
@@ -141,6 +158,19 @@ export default function CDashboardMenu() {
         <Divider />
         <WalletLink />
         <Divider />
+      
+              <CardContent>
+                <Button
+                 onClick={handleLogout}
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  sx={{ mt: 2 }}
+                >
+                  Logout
+                </Button>
+              </CardContent>
+            
       </List>
     </>
   );

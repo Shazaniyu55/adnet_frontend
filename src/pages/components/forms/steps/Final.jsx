@@ -25,7 +25,9 @@ export default function Final({values}) {
       // Handle the error (e.g., show an alert or toast)
     }
     if (user) {
+      
           router.push("/dashboard");
+            
     }  
     
 

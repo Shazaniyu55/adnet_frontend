@@ -4,6 +4,7 @@ import { logout } from "@/store/slice/userslice";
 import { useRouter } from "next/router";
 import { Container, Typography, Card, CardContent, Button, Grid } from "@mui/material";
 import Layout from "./components/dashboard/layouts";
+import Page from "./components/tax";
 
 function Dashboard() {
   const router = useRouter()
@@ -29,13 +30,14 @@ function Dashboard() {
     <Layout>
 
 <Container maxWidth="lg" sx={{ marginTop: 4 }}>
-        <Typography variant="h4" gutterBottom>
+        {/* <Typography variant="h4" gutterBottom>
           Dashboard
-        </Typography>
+        </Typography> */}
         <Grid container spacing={2}>
           {/* User Info Card */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Card>
+          <Grid item xs={12} sm={6} md={9}>
+          <Page/>
+            {/* <Card>
               <CardContent>
                 <Typography variant="h6">User Information</Typography>
                 <Typography variant="body1">ID: {_id}</Typography>
@@ -45,25 +47,13 @@ function Dashboard() {
                 <Typography variant="body1">Country: {country}</Typography>
                 <Typography variant="body1">Plan: {plan}</Typography>
               </CardContent>
-            </Card>
+            </Card> */}
+
+           
           </Grid>
 
-          {/* Logout Button */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Card>
-              <CardContent>
-                <Button
-                  onClick={handleLogout}
-                  fullWidth
-                  variant="contained"
-                  color="error"
-                  sx={{ mt: 2 }}
-                >
-                  Logout
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+        
+
         </Grid>
       </Container>
       
