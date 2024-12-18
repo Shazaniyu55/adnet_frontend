@@ -1,16 +1,17 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
-const InputField = ({ name, errors, type = 'text', noTitle = false, endAdorn = '' }) => {
+const InputField = ({register, name, errors, type = 'text', noTitle = false, endAdorn = '' }) => {
   return (
     <div className='w-full'>
       {/* Conditionally render title if not `noTitle` */}
       {!noTitle && <label htmlFor={name} className="block font-medium">{name}</label>}
       
-      <TextField
+      <input
         fullWidth
         type={type}
         id={name}
+        inputRef ={register}
         name={name}
         error={!!errors}  // If there's an error, show the error style
         helperText={errors}  // Display the error message if it exists

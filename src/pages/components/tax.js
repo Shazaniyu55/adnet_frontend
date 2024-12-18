@@ -44,7 +44,7 @@ export default function Page() {
   });
 
   const onHandleFormSubmit = (data) => {
-    console.log(data);
+    alert(data);
   }
 
   return (
@@ -71,6 +71,7 @@ export default function Page() {
                     name={`engagement_activity.${index}.event`}
                   /> */}
                   <InputField
+                  register={register}
                   noTitle
                   type='text'
                   errors={errors?.engagement_activity?.[index]?.event?.message}
