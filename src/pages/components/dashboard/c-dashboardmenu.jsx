@@ -100,63 +100,10 @@ export default function CDashboardMenu() {
             <WorkHistoryIcon color="primary" />
           </ListItemIcon>
           <ListItemText
-            primary={<Typography variant="body1">Calculate</Typography>}
+            primary={<Typography variant="body1">Calculate COGS</Typography>}
           />
-          {openJob ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={openJob} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton
-              sx={{ ml: 0 }}
-              onClick={() => {
-                router.push("/c-dashboard/job");
-              }}
-            >
-              <ListItemIcon>
-                <PendingIcon color="primary" />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="caption">Expenditure </Typography>
-                }
-              />
-            </ListItemButton>
-            <Divider />
-            <ListItemButton
-              sx={{ ml: 0 }}
-              onClick={() => {
-                router.push("/c-dashboard/job/jobs-in-progress");
-              }}
-            >
-              <ListItemIcon>
-                <PendingIcon color="primary" />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="caption">Analytics</Typography>
-                }
-              />
-            </ListItemButton>
-            <Divider />
-            {/* <CreateJobLink /> */}
-            <Divider />
-            <ListItemButton
-              sx={{ ml: 0 }}
-              onClick={() => {
-                router.push("/c-dashboard/job/completed-jobs");
-              }}
-            >
-              <ListItemIcon>
-                <AssignmentTurnedInIcon color="primary" />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="caption">Reviews</Typography>
-                }
-              />
-            </ListItemButton>
-          </List>
-        </Collapse>
+       
 
         <ListItemButton
           sx={{ ml: 0 }}
