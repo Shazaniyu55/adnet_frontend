@@ -168,12 +168,25 @@ export default function CDashboardMenu() {
             <ChatIcon color="primary" />
           </ListItemIcon>
           <ListItemText
-            primary={<Typography variant="body1">Chat</Typography>}
+            primary={<Typography variant="body1">Create Sales</Typography>}
           />
         </ListItemButton>
 
-        <Divider />
-        <WalletLink />
+
+        <ListItemButton
+          sx={{ ml: 0 }}
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          <ListItemIcon>
+            <ChatIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText
+            primary={<Typography variant="body1">Create Expenses</Typography>}
+          />
+        </ListItemButton>
+
         <Divider />
       
               <CardContent>
