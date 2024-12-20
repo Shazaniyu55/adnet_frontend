@@ -4,31 +4,6 @@ import { userJSON } from "@/lib/utils/user";
 
 
 
-export const fetchUser = createAsyncThunk("users/getUser", async () => {
-  const res = await axios("");
-  const data = await res.data;
-  return data;
-});
-
-// export const signUp = createAsyncThunk("auth/register", async (values) => {
-//   try {
-//     const res = await axios({
-//       method: "POST",
-//       url: `http://localhost:4200/api/auth/register`,
-//       data: values,
-//     });
-//     const data = await res.data;
-//     console.log(data)
-//     localStorage.removeItem("values");
-//     return data;
-//   } catch (err) {
-//     return {
-//       successful: false,
-//       message: err.response?.data?.message,
-//       user: {},
-//     };
-//   }
-// });
 
 export const signUp = createAsyncThunk("auth/register", async (values, { rejectWithValue }) => {
   try {
@@ -61,46 +36,7 @@ export const login = createAsyncThunk("auth/login", async (values, {rejectWithVa
   }
 });
 
-export const changePassword = createAsyncThunk(
-  "users/changePassword",
-  async (values) => {
-    try {
-      const res = await axios({
-        method: "POST",
-        url: `https://mail-crm.vercel.app/api/sw-dashboard/change-password`,
-        data: values,
-      });
-      const data = await res.data;
-      return data;
-    } catch (err) {
-      return {
-        successful: false,
-        message: err.response?.data?.message,
-      };
-    }
-  }
-);
 
-export const changePasswordWithPhone = createAsyncThunk(
-  "users/changePasswordWithPhone",
-  async (values) => {
-    try {
-      const res = await axios({
-        method: "POST",
-        url: `https://mail-crm.vercel.app/api/users/change-password`,
-        data: values,
-      });
-      const data = await res.data;
-      return data;
-    } catch (err) {
-      return {
-        successful: false,
-        message: err.response?.data?.message,
-        user: {},
-      };
-    }
-  }
-);
 
 const initialState = {
   user: userJSON() || {},
@@ -162,31 +98,8 @@ const userSlice = createSlice({
       state.error = action.payload || action.error.message;
     });
 
-    builder.addCase(changePassword.fulfilled, (state, action) => {
-      state.loading = false;
-      state.response = action.payload.message;
-      state.successful = action.payload.successful;
-      if (action.payload.user) {
-        localStorage.removeItem("user");
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
-        state.user = action.payload.user;
-      }
-    });
-    builder.addCase(changePassword.pending, (state) => {
-      state.loading = true;
-    });
+    
 
-    builder.addCase(changePasswordWithPhone.fulfilled, (state, action) => {
-      state.loading = false;
-      localStorage.removeItem("user");
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
-      state.response = action.payload.message;
-      state.successful = action.payload.successful;
-      state.user = action.payload.user;
-    });
-    builder.addCase(changePasswordWithPhone.pending, (state) => {
-      state.loading = true;
-    });
   },
 });
 
