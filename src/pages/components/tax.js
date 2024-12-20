@@ -8,22 +8,29 @@ import AddIcon from '@mui/icons-material/Add';
 import InputField from './inputfield';
 
 export default function Page() {
-  const [submittedData, setSubmittedData] = useState(null); // State to store submitted data
+  const [submittedData, setSubmittedData] = useState({
+    cogs: null,
+    revenue: null,
+  }); // Separate state for COGS and Revenue data
 
   const schemaActivity = yup.object().shape({
     event: yup.string().required('Event is required'),
-    cost_of_goods_sold: yup
+    amount: yup
       .number()
-      .typeError('COGS must be a number')
-      .required('Cost of Goods Sold is required')
-      .min(0, 'COGS cannot be negative'),
+      .typeError('Amount must be a number')
+      .required('Amount is required')
+      .min(0, 'Amount cannot be negative'),
   });
 
   const schema = yup.object().shape({
-    engagement_activity: yup
+    cogs: yup
       .array()
       .of(schemaActivity)
-      .min(1, 'At least one engagement activity is required'),
+      .min(1, 'At least one COGS activity is required'),
+    revenue: yup
+      .array()
+      .of(schemaActivity)
+      .min(1, 'At least one Revenue source is required'),
   });
 
   const {
@@ -35,127 +42,142 @@ export default function Page() {
     resolver: yupResolver(schema),
     mode: 'onTouched',
     defaultValues: {
-      engagement_activity: [
-        {
-          event: '',
-          cost_of_goods_sold: '',
-        },
-      ],
+      cogs: [{ event: '', amount: '' }],
+      revenue: [{ event: '', amount: '' }],
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields: cogsFields, append: appendCogs, remove: removeCogs } = useFieldArray({
     control,
-    name: 'engagement_activity',
+    name: 'cogs',
+  });
+
+  const { fields: revenueFields, append: appendRevenue, remove: removeRevenue } = useFieldArray({
+    control,
+    name: 'revenue',
   });
 
   const onHandleFormSubmit = (data) => {
-    setSubmittedData(data); // Store submitted data in state
+    setSubmittedData(data);
   };
 
-  const handleRemove = (index) => {
-    // Remove the item from the form
-    remove(index);
+  const calculateGrossProfitRatio = () => {
+    const totalCOGS = submittedData.cogs
+      ? submittedData.cogs.reduce((total, item) => total + (parseFloat(item.amount) || 0), 0)
+      : 0;
+    const totalRevenue = submittedData.revenue
+      ? submittedData.revenue.reduce((total, item) => total + (parseFloat(item.amount) || 0), 0)
+      : 0;
 
-    // Update the submitted data dynamically if it exists
-    if (submittedData) {
-      const updatedData = {
-        ...submittedData,
-        engagement_activity: submittedData.engagement_activity.filter((_, i) => i !== index),
-      };
-      setSubmittedData(updatedData);
-    }
+    const grossProfit = totalRevenue - totalCOGS;
+    const grossProfitRatio = totalRevenue ? (grossProfit / totalRevenue) * 100 : 0;
+
+    return { grossProfit, grossProfitRatio };
   };
+
+  const { grossProfit, grossProfitRatio } = calculateGrossProfitRatio();
 
   return (
-    <div className="w-full max-w-[1000px] mx-auto grid place-items-center">
-      <form onSubmit={handleSubmit(onHandleFormSubmit)} className="flex flex-col gap-4 w-full">
-        <h1 className="text-center font-semibold text-lg">Calculate Gross Profit</h1>
+    <div className="w-full max-w-[1200px] mx-auto p-6">
+      <h1 className="text-center font-semibold text-xl mb-4">Gross Profit Calculator</h1>
 
-        <h2 className="text-center font-semibold text-lg">Calculate COGS</h2>
-
-        <div className="flex flex-col gap-8 p-6 border rounded-lg max-h-[70vh] overflow-auto">
-          <div className="grid grid-cols-[1fr_10fr_10fr_10fr_1fr] text-sm w-full py-2 items-center">
-            <div className="font-semibold">No.</div>
-            <div className="font-semibold">Revenue Sources</div>
-            <div className="font-semibold">COGS</div>
-            <div className="font-semibold"></div>
-          </div>
-          {fields.map((item, index) => (
-            <div
-              key={item.id}
-              className="grid grid-cols-[1fr_10fr_10fr_10fr_1fr] text-sm w-full py-2 items-center"
-            >
-              <div className="ml-2">{index + 1}</div>
-              <div className="pr-4">
-                <InputField
-                  register={register}
-                  noTitle
-                  type="text"
-                  errors={errors?.engagement_activity?.[index]?.event?.message}
-                  name={`engagement_activity.${index}.event`}
-                />
-              </div>
-
-              <div className="pr-4">
-                <InputField
-                  register={register}
-                  noTitle
-                  type="number"
-                  errors={errors?.engagement_activity?.[index]?.cost_of_goods_sold?.message}
-                  name={`engagement_activity.${index}.cost_of_goods_sold`}
-                />
-              </div>
-              <div className="flex items-center justify-end">
-                {index > 0 && (
-                  <button
-                    className="grid place-items-center h-10 w-10 bg-red-500 text-white hover:bg-red-700 shadow-lg duration-300 rounded-md cursor-pointer border-none outline-none"
-                    type="button"
-                    onClick={() => handleRemove(index)}
-                  >
-                    <DeleteOutlineIcon />
-                  </button>
-                )}
-              </div>
+      <form onSubmit={handleSubmit(onHandleFormSubmit)} className="flex flex-col gap-6">
+        {/* Section for COGS */}
+        <div className="border p-4 rounded-lg">
+          <h2 className="text-lg font-semibold mb-4">Cost of Goods Sold (COGS)</h2>
+          {cogsFields.map((item, index) => (
+            <div key={item.id} className="grid grid-cols-[1fr_5fr_2fr_1fr] items-center gap-4 mb-2">
+              <span>{index + 1}</span>
+              <InputField
+                register={register}
+                noTitle
+                type="text"
+                placeholder="Event"
+                name={`cogs.${index}.event`}
+                errors={errors?.cogs?.[index]?.event?.message}
+              />
+              <InputField
+                register={register}
+                noTitle
+                type="number"
+                placeholder="Amount"
+                name={`cogs.${index}.amount`}
+                errors={errors?.cogs?.[index]?.amount?.message}
+              />
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => removeCogs(index)}
+                className="min-w-[40px] h-[40px] flex items-center justify-center"
+              >
+                <DeleteOutlineIcon />
+              </Button>
             </div>
           ))}
-
-          <div className="flex items-center justify-between mt-5">
-            <Button
-              variant="contained"
-              className="capitalize shadow-none px-6 bg-blue-100 text-blue-500 hover:bg-blue-500 hover:text-white"
-              startIcon={<AddIcon />}
-              onClick={() => {
-                append({ event: '', cost_of_goods_sold: '' });
-              }}
-            >
-              Add
-            </Button>
-          </div>
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={() => appendCogs({ event: '', amount: '' })}
+          >
+            Add COGS
+          </Button>
         </div>
-        <Button variant="contained" type="submit" className="w-[10rem]">
+
+        {/* Section for Revenue */}
+        <div className="border p-4 rounded-lg">
+          <h2 className="text-lg font-semibold mb-4">Revenue</h2>
+          {revenueFields.map((item, index) => (
+            <div key={item.id} className="grid grid-cols-[1fr_5fr_2fr_1fr] items-center gap-4 mb-2">
+              <span>{index + 1}</span>
+              <InputField
+                register={register}
+                noTitle
+                type="text"
+                placeholder="Revenue Source"
+                name={`revenue.${index}.event`}
+                errors={errors?.revenue?.[index]?.event?.message}
+              />
+              <InputField
+                register={register}
+                noTitle
+                type="number"
+                placeholder="Amount"
+                name={`revenue.${index}.amount`}
+                errors={errors?.revenue?.[index]?.amount?.message}
+              />
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => removeRevenue(index)}
+                className="min-w-[40px] h-[40px] flex items-center justify-center"
+              >
+                <DeleteOutlineIcon />
+              </Button>
+            </div>
+          ))}
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={() => appendRevenue({ event: '', amount: '' })}
+          >
+            Add Revenue
+          </Button>
+        </div>
+
+        {/* Submit Button */}
+        <Button variant="contained" type="submit" className="self-center w-[10rem]">
           Submit
         </Button>
       </form>
 
-      {/* Display submitted data */}
-      {submittedData && (
-        <div className="mt-6 w-full p-4 border rounded-lg bg-gray-50">
-          <h2 className="text-lg font-semibold">COGS Data</h2>
-          <pre className="mt-2 p-2 bg-gray-100 rounded-md overflow-auto text-sm">
-            {JSON.stringify(submittedData, null, 2)}
-          </pre>
-
-          {/* Calculate and Display Total COGS */}
-          <div className="mt-4 p-2 bg-gray-100 rounded-md text-sm">
-            <h3 className="text-md font-semibold">Total Cost of Goods Sold (COGS)</h3>
-            <p className="mt-1 text-blue-500 font-bold">
-              ₦
-              {submittedData.engagement_activity
-                .reduce((total, activity) => total + (parseFloat(activity.cost_of_goods_sold) || 0), 0)
-                .toFixed(2)}
-            </p>
-          </div>
+      {/* Display Results */}
+      {submittedData.cogs && submittedData.revenue && (
+        <div className="mt-8 border p-4 rounded-lg">
+          <h2 className="text-lg font-semibold mb-2">Results</h2>
+          <p>Total COGS: ₦{submittedData.cogs.reduce((total, item) => total + (parseFloat(item.amount) || 0), 0)}</p>
+          <p>Total Revenue: ₦{submittedData.revenue.reduce((total, item) => total + (parseFloat(item.amount) || 0), 0)}</p>
+          <p>Gross Profit: ₦{grossProfit}</p>
+          <p>Gross Profit Ratio: {grossProfitRatio.toFixed(2)}%</p>
         </div>
       )}
     </div>
